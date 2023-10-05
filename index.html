@@ -20,11 +20,11 @@
 		/>
 		<style>
 			/* @import url("https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Brush+Script&display=swap");
-			/* 브랜치 잘 되나? */
-			* {
+			/* 주석 */
+			/* * {
 				font-family: "Nanum Brush Script", cursive;
-			}
-			*/ .logo {
+			} */
+			.logo {
 				font-size: 50px;
 			}
 			.banner {
@@ -34,27 +34,81 @@
 			}
 
 			.main {
+				position: relative;
 			}
 
 			.main-photo {
 				margin: 0vh 0vw -120vh 0vw;
 				padding-top: 10px;
-				width: 100vw;
-				height: 90vh;
+				width: 100%;
+				height: auto;
 				margin-bottom: 10px;
 				background-position: center;
 				background-size: cover;
 				/* overflow: hidden; */
 			}
 
-			.question-mark {
-				width: 10vw;
-				height: 10vh;
+			.face-group {
+				background-repeat: no-repeat;
+				background-position: center;
+				background-size: cover;
+				overflow: hidden;
+				position: absolute;
+				width: 12%;
+				height: 0;
+				padding-bottom: 12%;
+				border-radius: 50%;
 			}
+			#f1 {
+				background-image: url("https://i.ibb.co/6FV400y/question.png");
+				top: 9%;
+				left: 9%;
+			}
+			#f2 {
+				background-image: url("https://i.ibb.co/6FV400y/question.png");
+				top: 11%;
+				left: 25%;
+			}
+			#f3 {
+				background-image: url("https://i.ibb.co/6FV400y/question.png");
+				top: 8%;
+				left: 44%;
+			}
+			#f4 {
+				background-image: url("https://i.ibb.co/6FV400y/question.png");
+				top: 5%;
+				left: 59%;
+			}
+			#f5 {
+				background-image: url("https://i.ibb.co/6FV400y/question.png");
+				top: 3%;
+				left: 80%;
+			}
+			/* 1st top 9 left 9 */
+			/* 2 top 11 left 25 */
+			/* 3 top 8 left 44 */
+			/* 4 top 5 left 59 */
+			/* 5 top 3 left 80 */
+
+			.test-button {
+				position: absolute;
+				top: 10%;
+				left: 9%;
+				width: 11%;
+				height: 0;
+				padding-bottom: 11%;
+				border-radius: 50%;
+
+				overflow: hidden;
+
+				background: #4679bd;
+			}
+
 			.team-intro {
 				margin: 10px 10px 10px 10px;
 				text-align: center;
 			}
+
 			.join {
 				margin: 20px;
 				color: tomato;
@@ -81,10 +135,42 @@
 				class="main-photo"
 				src="https://www.wallpaperflare.com/static/65/333/310/new-kids-on-the-block-suits-street-houses-wallpaper.jpg"
 			/>
+			<input
+				type="button"
+				class="face-group"
+				id="f1"
+			/>
+			<input
+				type="button"
+				class="face-group"
+				id="f2"
+			/>
+			<input
+				type="button"
+				class="face-group"
+				id="f3"
+			/>
+			<input
+				type="button"
+				class="face-group"
+				id="f4"
+			/>
+			<input
+				type="button"
+				class="face-group"
+				id="f5"
+			/>
+			<!-- <button class="question-mark">Button</button>
 			<button class="question-mark">Button</button>
+			<button class="question-mark">Button</button>
+			<button class="question-mark">Button</button> -->
 			<!-- <img
 				class="question-mark"
 				src="https://www.poynter.org/wp-content/uploads/2021/09/shutterstock_1563012205-1500x1091.png"
+			/> -->
+			<!-- <input
+				type="button"
+				class="test-button"
 			/> -->
 		</div>
 
