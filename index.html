@@ -19,11 +19,6 @@
 			crossorigin="anonymous"
 		/>
 		<style>
-			/* @import url("https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Brush+Script&display=swap");
-			/* 주석 */
-			/* * {
-				font-family: "Nanum Brush Script", cursive;
-			} */
 			.logo {
 				font-size: 50px;
 			}
@@ -58,6 +53,7 @@
 				height: 0;
 				padding-bottom: 12%;
 				border-radius: 50%;
+				font-size: 0;
 			}
 			#f1 {
 				background-image: url("https://i.ibb.co/6FV400y/question.png");
@@ -90,20 +86,6 @@
 			/* 4 top 5 left 59 */
 			/* 5 top 3 left 80 */
 
-			.test-button {
-				position: absolute;
-				top: 10%;
-				left: 9%;
-				width: 11%;
-				height: 0;
-				padding-bottom: 11%;
-				border-radius: 50%;
-
-				overflow: hidden;
-
-				background: #4679bd;
-			}
-
 			.team-intro {
 				margin: 10px 10px 10px 10px;
 				text-align: center;
@@ -123,7 +105,56 @@
 				border-radius: 10px;
 			}
 		</style>
-		<script></script>
+		<script>
+			//GET /api/users     얼굴 사진 받아오기
+
+			//https://gist.githubusercontent.com/wkdehdgk159/6e0290893147a9cc6404cdba3377ae1c/raw/da4a7fb519825a1cb9dbdf0b7ece273748ddd1cd/gistfile1.txt
+			//users.json 테스트 url
+			const users_url =
+				"https://gist.githubusercontent.com/wkdehdgk159/6e0290893147a9cc6404cdba3377ae1c/raw/da4a7fb519825a1cb9dbdf0b7ece273748ddd1cd/gistfile1.txt";
+			fetch(users_url)
+				.then((response) => response.json())
+				.then((data) => {
+					if (data.length === 0) return;
+					else {
+						for (i = 0; i < data.length; i++) {
+							f_string = "f" + String(i + 1);
+							var fid = document.getElementById(f_string);
+							fid.style.backgroundImage = `url(${data[i].userImageUrl})`;
+							fid.value = data[i].userName;
+							//버튼 value값에 userName 저장
+							console.log(fid);
+						}
+					}
+				});
+
+			//GET  /api/user/{username}   얼굴 사진 클릭시 정보 받아오기
+
+			//https://gist.githubusercontent.com/wkdehdgk159/270d590159219dede4e80fb39e87b0b8/raw/21e908887256a5eebad284dba7d07265e74cc958/gistfile1.txt
+			//user.json 테스트 url
+
+			var user_url =
+				"https://gist.githubusercontent.com/wkdehdgk159/270d590159219dede4e80fb39e87b0b8/raw/21e908887256a5eebad284dba7d07265e74cc958/gistfile1.txt";
+
+			// $("#f1").click(document.getElementById("f1").value);
+
+			// document.getElementById("f1").value = 1;
+
+			//얼굴사진 불러올 때 저장해 둔 value값을 통해 정보 불러오기
+
+			$(document).ready(function () {
+				$("#f2").click(function () {
+					faceClick("f2");
+				});
+			});
+			function faceClick(faceId) {
+				console.log(faceId);
+				var username = document.getElementById(faceId).value;
+				console.log(username);
+				const user_url = `/api/user/${username}`;
+			}
+			// const user_url = `/api/user/${username}`;
+		</script>
 	</head>
 	<body>
 		<!-- 로고 -->
@@ -160,18 +191,6 @@
 				class="face-group"
 				id="f5"
 			/>
-			<!-- <button class="question-mark">Button</button>
-			<button class="question-mark">Button</button>
-			<button class="question-mark">Button</button>
-			<button class="question-mark">Button</button> -->
-			<!-- <img
-				class="question-mark"
-				src="https://www.poynter.org/wp-content/uploads/2021/09/shutterstock_1563012205-1500x1091.png"
-			/> -->
-			<!-- <input
-				type="button"
-				class="test-button"
-			/> -->
 		</div>
 
 		<!-- 팀소개 -->
@@ -184,6 +203,8 @@
 			이들은 코딩 모임이라는 가면 뒤에 숨어 세계를 조종하고 있다는 의혹을 받고
 			있다.
 		</div>
+
+		<div id="test-card">1</div>
 
 		<!-- 합류 파트(아래에 항상 있게 할 수?) -->
 		<div class="join">
