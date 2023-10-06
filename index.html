@@ -19,12 +19,7 @@
 			crossorigin="anonymous"
 		/>
 		<style>
-			/* @import url("https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Brush+Script&display=swap");
-			/* 주석 */
-			* {
-				font-family: "Nanum Brush Script", cursive;
-			}
-			*/ .logo {
+			.logo {
 				font-size: 50px;
 			}
 			.banner {
@@ -34,27 +29,69 @@
 			}
 
 			.main {
+				position: relative;
 			}
 
 			.main-photo {
 				margin: 0vh 0vw -120vh 0vw;
 				padding-top: 10px;
-				width: 100vw;
-				height: 90vh;
+				width: 100%;
+				height: auto;
 				margin-bottom: 10px;
 				background-position: center;
 				background-size: cover;
 				/* overflow: hidden; */
 			}
 
-			.question-mark {
-				width: 10vw;
-				height: 10vh;
+			.face-group {
+				background-repeat: no-repeat;
+				background-position: center;
+				background-size: cover;
+				overflow: hidden;
+				position: absolute;
+				width: 12%;
+				height: 0;
+				padding-bottom: 12%;
+				border-radius: 50%;
+				font-size: 0;
 			}
+			#f1 {
+				background-image: url("https://i.ibb.co/6FV400y/question.png");
+				top: 9%;
+				left: 9%;
+			}
+			#f2 {
+				background-image: url("https://i.ibb.co/6FV400y/question.png");
+				top: 11%;
+				left: 25%;
+			}
+			#f3 {
+				background-image: url("https://i.ibb.co/6FV400y/question.png");
+				top: 8%;
+				left: 44%;
+			}
+			#f4 {
+				background-image: url("https://i.ibb.co/6FV400y/question.png");
+				top: 5%;
+				left: 59%;
+			}
+			#f5 {
+				background-image: url("https://i.ibb.co/6FV400y/question.png");
+				top: 3%;
+				left: 80%;
+			}
+			/* 1st top 9 left 9 */
+			/* 2 top 11 left 25 */
+			/* 3 top 8 left 44 */
+			/* 4 top 5 left 59 */
+			/* 5 top 3 left 80 */
+
 			.team-intro {
 				margin: 10px 10px 10px 10px;
-				text-align: center;
+				text-align: left;
+				padding-left: 30px;
 			}
+
 			.join {
 				margin: 20px;
 				color: tomato;
@@ -69,7 +106,145 @@
 				border-radius: 10px;
 			}
 		</style>
-		<script></script>
+		<script>
+			update();
+
+			//맨 처음, 가입, 수정, 삭제 시 얼굴 사진 업데이트
+			function update() {
+				const users_url = "http://localhost:8080/api/users";
+				// const users_url =
+				// 	"https://gist.githubusercontent.com/wkdehdgk159/6e0290893147a9cc6404cdba3377ae1c/raw/da4a7fb519825a1cb9dbdf0b7ece273748ddd1cd/gistfile1.txt";
+				fetch(users_url)
+					.then((response) => response.json())
+					.then((data) => {
+						if (data.length === 0) return;
+						else {
+							//데이터 길이만큼 for문 돌기
+							for (i = 0; i < data.length; i++) {
+								f_string = "f" + String(i + 1);
+								var fid = document.getElementById(f_string);
+
+								//i+1번째 버튼의 css backgroundImage 주소를 변경
+								fid.style.backgroundImage = `url(${data[i].userImageUrl})`;
+
+								//추후 user 정보 불러오기를 위해 버튼 value값에 userName 저장
+								//!!!!!!!!!!!!!!!!!!!! 이후에 수정이나 삭제할 때 value를 바꿔줘야할 듯
+								fid.value = data[i].userName;
+							}
+						}
+					});
+			}
+			//GET /api/users     얼굴 사진 받아오기
+
+			//https://gist.githubusercontent.com/wkdehdgk159/6e0290893147a9cc6404cdba3377ae1c/raw/da4a7fb519825a1cb9dbdf0b7ece273748ddd1cd/gistfile1.txt
+			//users.json 테스트 url
+
+			//GET  /api/user/{username}   얼굴 사진 클릭시 정보 받아오기
+
+			//DOM 다 불러온 이후 실행. 근데 왜?
+			$(document).ready(function () {
+				//user-card 숨기고
+				$(".user-card").hide();
+
+				//각각의 버튼 누를 시 실행
+				$("#f1").click(function () {
+					faceClick("f1");
+				});
+				$("#f2").click(function () {
+					faceClick("f2");
+				});
+				$("#f3").click(function () {
+					faceClick("f3");
+				});
+				$("#f4").click(function () {
+					faceClick("f4");
+				});
+				$("#f5").click(function () {
+					faceClick("f5");
+				});
+			});
+
+			///1. 유저 카드, 2. 가입 카드, 3. 수정 카드 4. 팀 소개 중 무엇을 띄울 것인지 결정하는 카드
+			function whichToDisplay(num) {
+				switch (num) {
+					case 1:
+						$(".user-card").show();
+						// $(".join-card").hide();
+						// $(".modify-card").hide();
+						$(".team-intro").hide();
+						break;
+					case 2:
+						$(".user-card").hide();
+						$(".join-card").show();
+						$(".modify-card").hide();
+						$(".team-intro").hide();
+						break;
+					case 3:
+						$(".user-card").hide();
+						$(".join-card").hide();
+						$(".modify-card").show();
+						$(".team-intro").hide();
+						break;
+					case 4:
+						$(".user-card").hide();
+						$(".join-card").hide();
+						$(".modify-card").hide();
+						$(".team-intro").show();
+						break;
+				}
+			}
+
+			////얼굴사진 불러올 때 버튼에 저장해 둔 value값을 통해 정보 불러오기
+			function faceClick(faceId) {
+				var username = document.getElementById(faceId).value;
+				// value값이 없으면 종료
+				if (username === "") {
+					return;
+				}
+
+				//user.json 테스트 url
+				// var user_url =
+				// 	"https://gist.githubusercontent.com/wkdehdgk159/b741d02fb89c41b795604e0a730496a6/raw/77013846d55d4d5983cc5fcf5986d9881869dbd1/gistfile1.txt";
+
+				// 버튼 value값으로 GET 메소드보낼 url 만들기
+				const user_url = `http://localhost:8080/api/user/${username}`;
+				fetch(user_url)
+					.then((response) => response.json())
+					.then((data) => {
+						var userName = data.userName;
+						var userIntroduce = data.userIntroduce;
+						var userMbti = data.userMbti;
+						var userImageUrl = data.userImageUrl;
+
+						//user-card에 정보들 저장
+						$("#u-url").attr("src", userImageUrl);
+						$("#u-name").text(userName);
+						$("#u-mbti").text(userMbti);
+						$("#u-intro").text(userIntroduce);
+
+						//user-card 띄우기
+						whichToDisplay(1);
+					});
+			}
+
+			function openclose() {
+				$("#postingbox").toggle();
+			}
+
+			$(document).ready(function () {
+				$("#postingbtn").click(function () {
+					openlog();
+				});
+			});
+
+			function openlog() {
+				let image = $("#userImageUrl").val();
+				let name = $("#userName").val();
+				let mbti = $("#userMbti").val();
+				let introduce = $("#userIntroduce").val();
+				console.log(image, name, mbti, introduce);
+			}
+		</script>
 	</head>
 	<body>
 		<!-- 로고 -->
@@ -81,11 +256,31 @@
 				class="main-photo"
 				src="https://www.wallpaperflare.com/static/65/333/310/new-kids-on-the-block-suits-street-houses-wallpaper.jpg"
 			/>
-			<button class="question-mark">Button</button>
-			<!-- <img
-				class="question-mark"
-				src="https://www.poynter.org/wp-content/uploads/2021/09/shutterstock_1563012205-1500x1091.png"
-			/> -->
+			<input
+				type="button"
+				class="face-group"
+				id="f1"
+			/>
+			<input
+				type="button"
+				class="face-group"
+				id="f2"
+			/>
+			<input
+				type="button"
+				class="face-group"
+				id="f3"
+			/>
+			<input
+				type="button"
+				class="face-group"
+				id="f4"
+			/>
+			<input
+				type="button"
+				class="face-group"
+				id="f5"
+			/>
 		</div>
 
 		<!-- 팀소개 -->
@@ -95,13 +290,85 @@
 			사모임으로 <br />
 			'MBTI 중 최고의 특성 I + MZ세대 + 코딩에 대한 열정' 이라는 까다로운
 			가입조건으로 악명이 높다 <br />
-			이들은 코딩 모임이라는 가면 뒤에 숨어 세계를 조종하고 있다는 의혹을 받고
-			있다.asdfasdf
+			<br />
+			이들은 스프링을 정복하여 웹개발 시장의 패러다임을 바꾸려는 목적으로
+			모였다고 하나<br />
+			일각에서는 코딩 모임이란 가면 뒤에 숨어 세계를 조종하려 한다는 의혹을 받고
+			있다<br />
+			<br />
+			Team 구조조정 안되조 는 자체적인 규약 또한 엄격한데<br />
+			특이한 점은 건강관리를 우선으로 두고 있다는 점이다<br />
+			일례로 공복혈당 120mg/dL을 초과한 회원이 그 즉시 퇴출된 바가 있다.
+		</div>
+		<div class="user-card">
+			<img
+				src="https://www.kasandbox.org/programming-images/avatars/primosaur-ultimate.png"
+				id="u-url"
+			/>
+			<div id="u-name">기영수</div>
+			<div id="u-mbti">INTP</div>
+			<div id="u-intro">반녕</div>
 		</div>
 
-		<!-- 합류 파트(아래에 항상 있게 할 수?) -->
+		<!-- 합류파트 -->
+		<div
+			class="mypostingbox"
+			id="postingbox"
+		>
+			<div class="form-floating mb-3">
+				<input
+					type="email"
+					class="form-control"
+					id="userImageUrl"
+					placeholder="프로필 사진"
+				/>
+				<label for="floatingInput">프로필 사진</label>
+			</div>
+			<div class="form-floating mb-3">
+				<input
+					type="email"
+					class="form-control"
+					id="userName"
+					placeholder="이름"
+				/>
+				<label for="floatingInput">이름</label>
+			</div>
+			<div class="form-floating mb-3">
+				<input
+					type="email"
+					class="form-control"
+					id="userMbti"
+					placeholder="MBTI"
+				/>
+				<label for="floatingInput">MBTI</label>
+			</div>
+			<div class="form-floating mb-3">
+				<input
+					type="email"
+					class="form-control"
+					id="userIntroduce"
+					placeholder="나를 소개해 주세요!"
+				/>
+				<label for="floatingInput">나를 소개해 주세요!</label>
+			</div>
+			<button
+				id="postingbtn"
+				type="button"
+				class="btn btn-dark"
+			>
+				합류하기
+			</button>
+		</div>
+		​
+		<div class="mycards">
+			<div
+				id="card"
+				class="row row-cols-1 row-cols-md-4 g-4"
+			></div>
+		</div>
+
 		<div class="join">
-			<button>Join Our Team</button>
+			<button onclick="openclose()">Join Our Team</button>
 		</div>
 	</body>
 </html>
