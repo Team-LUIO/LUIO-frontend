@@ -108,12 +108,25 @@
 			}
 
 			/* 가입카드 style */
-			.mycards {
-				/* 수정 삭제와 중복 */
-				width: 1200px;
+			.join-card {
+				background-color: rgb(108, 108, 153);
+				width: 500px;
 				margin: 20px auto 20px auto;
+				border: none;
+				padding: 20px;
+				border-radius: 5px;
+				display: none;
 			}
-			.mypostingbox {
+			.user-card {
+				background-color: rgb(108, 108, 153);
+				width: 500px;
+				margin: 20px auto 20px auto;
+				border: none;
+				padding: 20px;
+				border-radius: 5px;
+				display: none;
+			}
+			.modify-card {
 				background-color: rgb(108, 108, 153);
 				width: 500px;
 				margin: 20px auto 20px auto;
@@ -132,13 +145,13 @@
 			.form-floating > label {
 				color: white;
 			}
-			.mypostingbox > button {
+			.join-card > button {
 				display: block;
 				margin: auto;
 				width: 50%;
 				transition: 0.4s;
 			}
-			.mypostingbox > button:hover {
+			.join-card > button:hover {
 				width: 100%;
 			}
 
@@ -169,17 +182,9 @@
 				padding: 30px;
 				border-radius: 5px;
 			}
-			​ .card2 {
-				width: 400px;
-				height: 600px;
-				background-color: rgb(108, 108, 153);
-				border: 1px solid black;
-				padding: 30px;
-				border-radius: 5px;
-				display: none;
-			}
 		</style>
 		<script>
+			whichToDisplay(4);
 			update();
 
 			//맨 처음, 가입, 수정, 삭제 시 얼굴 사진 업데이트
@@ -241,24 +246,28 @@
 			function whichToDisplay(num) {
 				switch (num) {
 					case 1:
+						console.log(1);
 						$(".user-card").show();
-						// $(".join-card").hide();
-						// $(".modify-card").hide();
+						$(".join-card").hide();
+						$(".modify-card").hide();
 						$(".team-intro").hide();
 						break;
 					case 2:
+						console.log(2);
 						$(".user-card").hide();
 						$(".join-card").show();
 						$(".modify-card").hide();
 						$(".team-intro").hide();
 						break;
 					case 3:
+						console.log(3);
 						$(".user-card").hide();
 						$(".join-card").hide();
 						$(".modify-card").show();
 						$(".team-intro").hide();
 						break;
 					case 4:
+						console.log(4);
 						$(".user-card").hide();
 						$(".join-card").hide();
 						$(".modify-card").hide();
@@ -302,51 +311,65 @@
 
 			// 가입 카드 부분
 			function openclose() {
-				$("#postingbox").toggle();
+				whichToDisplay(2);
 			}
 
 			$(document).ready(function () {
 				$("#postingbtn").click(function () {
 					openlog();
+					////////////POST 로직////////////////
+					alert("가입을 환영합니다!");
+					location.reload();
 				});
 			});
 
 			function openlog() {
-				let image = $("#userImageUrl").val();
-				let name = $("#userName").val();
-				let mbti = $("#userMbti").val();
-				let introduce = $("#userIntroduce").val();
+				let image = $("#join-userImageUrl").val();
+				let name = $("#join-userName").val();
+				let mbti = $("#join-userMbti").val();
+				let introduce = $("#join-userIntroduce").val();
 				console.log(image, name, mbti, introduce);
 			}
 
 			//수정 삭제 부분
 			//수정 버튼 클릭시 보여지는 카드 변경
-			$("#modifybtn").click(function () {
-				$("#card").hide();
-				$("#card2").show();
+			$(document).ready(function () {
+				$("#modifybtn").click(function () {
+					whichToDisplay(3);
+					//user-card 내용들 초기에 뜨게 하기
+					$("#mod-userMbti").val($("#u-mbti").text());
+					$("#mod-userName").val($("#u-name").text());
+					$("#mod-userIntroduce").val($("#u-intro").text());
+					$("#mod-userImageUrl").val($("#u-url").attr("src"));
+				});
 			});
+
 			//완료 버튼 클릭시 콘솔에 정보들 출력
-			$("#finishbtn").click(function () {
-				let userImageUrl = $("#userImageUrl").val();
-				let userName = $("#userName").val();
-				let userMbti = $("#userMbti").val();
-				let userIntroduce = $("#userIntroduce").val();
-				console.log(userImageUrl);
-				console.log(userName);
-				console.log(userMbti);
-				console.log(userIntroduce);
-				//     fetch("http:localhost:8080/api/user", {
-				//     method: "PATCH",
-				//     headers: {
-				//         "Content-Type": "application/json",
-				//     },
-				//     body: JSON.stringify({
-				//         userImageUrl: "http://wolkeollkwd.com(예시)",
-				//         userName: "Test",
-				//         userMbti: "Test",
-				//         userIntroduce: "I am testing!",
-				//     }),
-				// }).then((response) => console.log(response));
+			$(document).ready(function () {
+				$("#finishbtn").click(function () {
+					let userImageUrl = $("#mod-userImageUrl").val();
+					let userName = $("#mod-userName").val();
+					let userMbti = $("#mod-userMbti").val();
+					let userIntroduce = $("#mod-userIntroduce").val();
+					console.log(userImageUrl);
+					console.log(userName);
+					console.log(userMbti);
+					console.log(userIntroduce);
+					//     fetch("http:localhost:8080/api/user", {
+					//     method: "PATCH",
+					//     headers: {
+					//         "Content-Type": "application/json",
+					//     },
+					//     body: JSON.stringify({
+					//         userImageUrl: "http://wolkeollkwd.com(예시)",
+					//         userName: "Test",
+					//         userMbti: "Test",
+					//         userIntroduce: "I am testing!",
+					//     }),
+					// }).then((response) => console.log(response));
+					alert("수정이 완료되었습니다!");
+					location.reload();
+				});
 			});
 			//삭제 버튼 클릭 시 delete 메소드 전송
 			$("#deletebtn").click(async function () {
@@ -414,15 +437,12 @@
 		</div>
 
 		<!-- 합류파트 -->
-		<div
-			class="mypostingbox"
-			id="postingbox"
-		>
+		<div class="join-card">
 			<div class="form-floating mb-3">
 				<input
 					type="email"
 					class="form-control"
-					id="userImageUrl"
+					id="join-userImageUrl"
 					placeholder="프로필 사진"
 				/>
 				<label for="floatingInput">프로필 사진</label>
@@ -431,7 +451,7 @@
 				<input
 					type="email"
 					class="form-control"
-					id="userName"
+					id="join-userName"
 					placeholder="이름"
 				/>
 				<label for="floatingInput">이름</label>
@@ -440,7 +460,7 @@
 				<input
 					type="email"
 					class="form-control"
-					id="userMbti"
+					id="join-userMbti"
 					placeholder="MBTI"
 				/>
 				<label for="floatingInput">MBTI</label>
@@ -449,7 +469,7 @@
 				<input
 					type="email"
 					class="form-control"
-					id="userIntroduce"
+					id="join-userIntroduce"
 					placeholder="나를 소개해 주세요!"
 				/>
 				<label for="floatingInput">나를 소개해 주세요!</label>
@@ -464,105 +484,91 @@
 		</div>
 
 		<!-- 수정/삭제 파트 -->
-
-		<div class="mycards">
-			<div class="row row-cols-1 row-cols-md-4 g-4">
-				<div class="col">
-					<!-- 멤버카드 출력 -->
-					<div
-						id="card"
-						class="card"
-					>
-						<div class="user-card">
-							<img
-								src="https://www.kasandbox.org/programming-images/avatars/primosaur-ultimate.png"
-								id="u-url"
-							/>
-							<div id="u-name">기영수</div>
-							<div id="u-mbti">INTP</div>
-							<div id="u-intro">반녕</div>
-							<div class="buttons">
-								<!-- 수정 버튼 -->
-								<button
-									id="modifybtn"
-									type="button"
-									class="btn btn-light"
-								>
-									수정하기
-								</button>
-								<!-- 삭제 버튼 -->
-								<button
-									id="deletebtn"
-									type="button"
-									class="btn btn-dark"
-								>
-									삭제하기
-								</button>
-							</div>
-						</div>
-					</div>
-
-					<!-- 수정 카드 -->
-					<div
-						id="card2"
-						class="card2"
-					>
-						<div class="card-body">
-							<div class="form-floating mb-3">
-								<input
-									type="email"
-									class="form-control"
-									id="userImageUrl"
-									placeholder="이미지 주소"
-								/>
-								<label for="floatingInput">이미지 주소</label>
-							</div>
-							<p class="card-text">팀원 이름</p>
-							<div class="form-floating mb-3">
-								<input
-									type="email"
-									class="form-control"
-									id="userName"
-									placeholder="팀원 이름"
-								/>
-								<label for="floatingInput"></label>
-							</div>
-							<p class="card-text">팀원 mbti</p>
-							<div class="form-floating mb-3">
-								<input
-									type="email"
-									class="form-control"
-									id="userMbti"
-									placeholder="팀원 mbti"
-								/>
-								<label for="floatingInput"></label>
-							</div>
-							<p class="card-title">팀원 소개</p>
-							<div class="form-floating mb-3">
-								<input
-									type="email"
-									class="form-control"
-									id="userIntroduce"
-									placeholder="팀원 소개"
-								/>
-								<label for="floatingInput"></label>
-							</div>
-						</div>
-						<div class="finishbtn">
-							<!-- 완료 버튼 -->
-							<button
-								id="finishbtn"
-								type="button"
-								class="btn btn-dark"
-							>
-								완료하기
-							</button>
-						</div>
-						<!--  -->
-					</div>
-				</div>
+		<div class="user-card">
+			<div class="form-floating mb-3">
+				<img
+					src="https://www.kasandbox.org/programming-images/avatars/primosaur-ultimate.png"
+					id="u-url"
+				/>
 			</div>
-			​
+			<div class="form-floating mb-3">
+				<div id="u-name">기영수</div>
+			</div>
+			<div class="form-floating mb-3">
+				<div id="u-mbti">INTP</div>
+			</div>
+			<div class="form-floating mb-3">
+				<div id="u-intro">반녕</div>
+			</div>
+			<!-- 수정 버튼 -->
+			<button
+				id="modifybtn"
+				type="button"
+				class="btn btn-light"
+			>
+				수정하기
+			</button>
+			<!-- 삭제 버튼 -->
+			<button
+				id="deletebtn"
+				type="button"
+				class="btn btn-dark"
+			>
+				삭제하기
+			</button>
+		</div>
+
+		<!-- 수정 카드 -->
+		<div class="modify-card">
+			<div class="form-floating mb-3">
+				<input
+					type="email"
+					class="form-control"
+					id="mod-userImageUrl"
+					placeholder="이미지 주소"
+				/>
+				<label for="floatingInput">이미지 주소</label>
+			</div>
+			<p class="card-text">팀원 이름</p>
+			<div class="form-floating mb-3">
+				<input
+					type="email"
+					class="form-control"
+					id="mod-userName"
+					placeholder="팀원 이름"
+					readonly
+				/>
+				<label for="floatingInput"></label>
+			</div>
+			<p class="card-text">팀원 mbti</p>
+			<div class="form-floating mb-3">
+				<input
+					type="email"
+					class="form-control"
+					id="mod-userMbti"
+					placeholder="팀원 mbti"
+				/>
+				<label for="floatingInput"></label>
+			</div>
+			<p class="card-title">팀원 소개</p>
+			<div class="form-floating mb-3">
+				<input
+					type="email"
+					class="form-control"
+					id="mod-userIntroduce"
+					placeholder="팀원 소개"
+				/>
+				<label for="floatingInput"></label>
+			</div>
+
+			<!-- 완료 버튼 -->
+			<button
+				id="finishbtn"
+				type="button"
+				class="btn btn-dark"
+			>
+				완료하기
+			</button>
 		</div>
 
 		<div class="join">
