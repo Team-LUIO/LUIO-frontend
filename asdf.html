@@ -77,23 +77,20 @@
                 console.log(userName)
                 console.log(userMbti)
                 console.log(userIntroduce)
+            //     fetch("http:localhost:8080/api/user", {
+            //     method: "PATCH",
+            //     headers: {
+            //         "Content-Type": "application/json",
+            //     },
+            //     body: JSON.stringify({
+            //         userImageUrl: "http://wolkeollkwd.com(예시)",
+            //         userName: "Test",
+            //         userMbti: "Test",
+            //         userIntroduce: "I am testing!",
+            //     }),
+            // }).then((response) => console.log(response));
             });
         });
-
-        $("#finishbtn").click(async function () {
-            fetch("http:localhost:8080/api/user", {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    userImageUrl: "http://wolkeollkwd.com(예시)",
-                    userName: "Test",
-                    userMbti: "Test",
-                    userIntroduce: "I am testing!",
-                }),
-            }).then((response) => console.log(response));
-        })
 
         $("#deletebtn").click(async function () {
             fetch("http:localhost:8080/api/user", {
@@ -101,6 +98,7 @@
             }).then((response) => console.log(response))
                 .then((data) => console.log(data));
         })
+        
         /*let docs = await getDocs(collection(db, "albums"));
         docs.forEach((doc) => {
             let row = doc.data();
