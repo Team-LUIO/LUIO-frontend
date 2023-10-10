@@ -18,15 +18,30 @@
 			integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
 			crossorigin="anonymous"
 		/>
+		<link
+			rel="preconnect"
+			href="https://fonts.googleapis.com"
+		/>
+		<link
+			rel="preconnect"
+			href="https://fonts.gstatic.com"
+			crossorigin
+		/>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap"
+			rel="stylesheet"
+		/>
 		<style>
 			@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap");
-			.logo {
-				font-size: 50px;
+
+			* {
+				font-family: "IBM Plex Sans KR", sans-serif;
 			}
-			.banner {
-				position: absolute;
-				left: 0;
-				top: 0;
+			.logo {
+				font-size: 100px;
+				font-weight: 800;
+				font-family: "Black Ops One", cursive;
+				margin-left: 10px;
 			}
 
 			.main {
@@ -41,7 +56,7 @@
 				margin-bottom: 10px;
 				background-position: center;
 				background-size: cover;
-				/* overflow: hidden; */
+				overflow: hidden;
 			}
 
 			.face-group {
@@ -87,21 +102,39 @@
 			/* 4 top 5 left 59 */
 			/* 5 top 3 left 80 */
 
+			h1 {
+				font-weight: bold;
+			}
 			.team-intro {
-				margin: 10px 10px 10px 10px;
-				text-align: left;
+				margin: 0 auto;
+				text-align: center;
 				padding-left: 30px;
+				background-color: rgb(180, 175, 175);
+				font-family: "IBM Plex Sans KR", sans-serif;
+				width: 900px;
+				border: 1px solid black;
+				padding: 30px;
+				border-radius: 5px;
+				font-size: large;
+			}
+
+			#u-url {
+				display: block;
+				margin-left: auto;
+				margin-right: auto;
+				width: 50%;
+				/* object-fit: cover; */
 			}
 
 			.join {
 				margin: 20px;
-				color: tomato;
 			}
-			.join button {
+			#joinbtn {
 				font-size: 30px;
 				font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 				position: fixed;
-				color: blue;
+				color: white;
+				background-color: black;
 				right: 10px;
 				bottom: 10px;
 				border-radius: 10px;
@@ -109,56 +142,66 @@
 
 			/* 가입카드 style */
 			.join-card {
-				background-color: rgb(108, 108, 153);
+				background-color: transparent;
 				width: 500px;
 				margin: 20px auto 20px auto;
-				border: none;
+				border: 4px outset lightgray;
 				padding: 20px;
-				border-radius: 5px;
+				border-radius: 10px;
 				display: none;
 			}
-			.user-card {
-				background-color: rgb(108, 108, 153);
-				width: 500px;
-				margin: 20px auto 20px auto;
-				border: none;
-				padding: 20px;
-				border-radius: 5px;
-				display: none;
-			}
-			.modify-card {
-				background-color: rgb(108, 108, 153);
-				width: 500px;
-				margin: 20px auto 20px auto;
-				border: none;
-				padding: 20px;
-				border-radius: 5px;
-				display: none;
-			}
-			.form-floating > input {
-				border: none;
-				border-radius: 0px;
-				border-bottom: 2px solid lightgray;
-				color: white;
-				background-color: rgb(108, 108, 153);
-			}
-			.form-floating > label {
-				color: white;
-			}
+
 			.join-card > button {
 				display: block;
 				margin: auto;
 				width: 50%;
 				transition: 0.4s;
 			}
+
 			.join-card > button:hover {
+				background-color: rgb(16, 76, 124);
 				width: 100%;
 			}
-
-			/* 수정삭제 style */
-			​ * {
-				font-family: "IBM Plex Sans KR", sans-serif;
+			.form-floating > input {
+				border: none;
+				border-radius: 0px;
+				border-bottom: 2px solid rgb(16, 76, 124);
+				/* color: black; */
+				/* background-color: white; */
 			}
+			​ .form-floating > label {
+				color: rgb(16, 76, 124);
+			}
+
+			/* 유저카드 style */
+			.user-card {
+				background-color: transparent;
+				width: 500px;
+				margin: 20px auto 20px auto;
+				border: 4px outset lightgray;
+				padding: 20px;
+				border-radius: 10px;
+				display: none;
+				text-align: center;
+			}
+			#majesty {
+				font-size: 20px;
+			}
+			.intro {
+				font-size: 30px;
+			}
+
+			/* 수정카드 style */
+			.modify-card {
+				background-color: transparent;
+				width: 500px;
+				margin: 20px auto 20px auto;
+				border: 4px outset lightgray;
+				padding: 20px;
+				border-radius: 10px;
+				display: none;
+			}
+
 			.buttons {
 				display: flex;
 				flex-direction: row;
@@ -302,33 +345,52 @@
 						$("#u-url").attr("src", userImageUrl);
 						$("#u-name").text(userName);
 						$("#u-mbti").text(userMbti);
-						$("#u-intro").text(userIntroduce);
+						$("#u-intro").html(userIntroduce);
+						$("#majesty").text("최고존엄 " + userName + ".");
 
 						//user-card 띄우기
 						whichToDisplay(1);
+						var offset = $(".user-card").offset();
+						$("html").animate({ scrollTop: offset.top }, 100);
 					});
 			}
 
-			// 가입 카드 부분
-			function openclose() {
-				whichToDisplay(2);
-			}
+			// join버튼 눌렀을 때
+			$(document).ready(function () {
+				$("#joinbtn").click(function (event) {
+					whichToDisplay(2);
+					var offset = $(".join-card").offset();
+					$("html").animate({ scrollTop: offset.top }, 100);
+				});
+			});
 
+			//가입완료 버튼 눌렀을 때
 			$(document).ready(function () {
 				$("#postingbtn").click(function () {
-					openlog();
-					////////////POST 로직////////////////
+					inputData();
 					alert("가입을 환영합니다!");
 					location.reload();
 				});
 			});
 
-			function openlog() {
+			//POST 로직 함수
+			function inputData() {
 				let image = $("#join-userImageUrl").val();
 				let name = $("#join-userName").val();
 				let mbti = $("#join-userMbti").val();
 				let introduce = $("#join-userIntroduce").val();
-				console.log(image, name, mbti, introduce);
+				fetch("http://localhost:8080/api/user", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({
+						userName: name,
+						userIntroduce: introduce,
+						userMbti: mbti,
+						userImageUrl: image,
+					}),
+				}).then((response) => console.log(response));
 			}
 
 			//수정 삭제 부분
@@ -339,45 +401,49 @@
 					//user-card 내용들 초기에 뜨게 하기
 					$("#mod-userMbti").val($("#u-mbti").text());
 					$("#mod-userName").val($("#u-name").text());
-					$("#mod-userIntroduce").val($("#u-intro").text());
+					$("#mod-userIntroduce").val($("#u-intro").html());
 					$("#mod-userImageUrl").val($("#u-url").attr("src"));
 				});
 			});
 
-			//완료 버튼 클릭시 콘솔에 정보들 출력
-			$(document).ready(function () {
+			//완료 버튼 클릭시 PATCH -> DB 유저 정보 업데이트
+			$(function () {
 				$("#finishbtn").click(function () {
 					let userImageUrl = $("#mod-userImageUrl").val();
 					let userName = $("#mod-userName").val();
 					let userMbti = $("#mod-userMbti").val();
 					let userIntroduce = $("#mod-userIntroduce").val();
-					console.log(userImageUrl);
-					console.log(userName);
-					console.log(userMbti);
-					console.log(userIntroduce);
-					//     fetch("http:localhost:8080/api/user", {
-					//     method: "PATCH",
-					//     headers: {
-					//         "Content-Type": "application/json",
-					//     },
-					//     body: JSON.stringify({
-					//         userImageUrl: "http://wolkeollkwd.com(예시)",
-					//         userName: "Test",
-					//         userMbti: "Test",
-					//         userIntroduce: "I am testing!",
-					//     }),
-					// }).then((response) => console.log(response));
-					alert("수정이 완료되었습니다!");
+
+					fetch("http://localhost:8080/api/user/" + userName, {
+						method: "PATCH",
+						headers: {
+							"Content-Type": "application/json",
+						},
+						body: JSON.stringify({
+							userImageUrl: userImageUrl,
+							userName: userName,
+							userMbti: userMbti,
+							userIntroduce: userIntroduce,
+						}),
+					}).then((response) => console.log(response));
+					alert("수정 완료!!!");
 					location.reload();
 				});
 			});
-			//삭제 버튼 클릭 시 delete 메소드 전송
-			$("#deletebtn").click(async function () {
-				fetch("http:localhost:8080/api/user", {
-					method: "DELETE",
-				})
-					.then((response) => console.log(response))
-					.then((data) => console.log(data));
+
+			$(function () {
+				$("#deletebtn").click(function () {
+					let userName = $("#u-name").text();
+
+					console.log(userName);
+					fetch("http://localhost:8080/api/user/" + userName, {
+						method: "DELETE",
+					})
+						.then((response) => console.log(response))
+						.then((data) => console.log(data));
+					alert("삭제 완료!!!");
+					location.reload();
+				});
 			});
 		</script>
 	</head>
@@ -420,7 +486,7 @@
 
 		<!-- 팀소개 -->
 		<div class="team-intro">
-			<h1>Team 9조조정 안되조</h1>
+			<h1>Team. 9조조정 안되조</h1>
 			Team 9조조정 안되조 는 내일배움캠프의 엘리트들이 모여 만든 유서깊은
 			사모임으로 <br />
 			'MBTI 중 최고의 특성 I + MZ세대 + 코딩에 대한 열정' 이라는 까다로운
@@ -466,13 +532,10 @@
 				<label for="floatingInput">MBTI</label>
 			</div>
 			<div class="form-floating mb-3">
-				<input
-					type="email"
-					class="form-control"
-					id="join-userIntroduce"
-					placeholder="나를 소개해 주세요!"
-				/>
-				<label for="floatingInput">나를 소개해 주세요!</label>
+				<p class="card-title">나를 소개해 주세요!</p>
+				<!-- prettier-ignore -->
+				<textarea class="form-control" placeholder="나를 소개해 주세요!" id="join-userIntroduce" name="conten" rows="5"></textarea>
+				<!-- <label for="floatingInput">나를 소개해 주세요!</label> -->
 			</div>
 			<button
 				id="postingbtn"
@@ -483,22 +546,29 @@
 			</button>
 		</div>
 
-		<!-- 수정/삭제 파트 -->
+		<!-- 수정/삭제 + 유저 카드 파트 -->
 		<div class="user-card">
 			<div class="form-floating mb-3">
 				<img
 					src="https://www.kasandbox.org/programming-images/avatars/primosaur-ultimate.png"
 					id="u-url"
 				/>
+				<div id="majesty"></div>
 			</div>
 			<div class="form-floating mb-3">
-				<div id="u-name">기영수</div>
+				<div class="intro">이름: <span id="u-name">기영수</span></div>
 			</div>
 			<div class="form-floating mb-3">
-				<div id="u-mbti">INTP</div>
+				<div class="intro">MBTI: <span id="u-mbti">INTP</span></div>
 			</div>
 			<div class="form-floating mb-3">
-				<div id="u-intro">반녕</div>
+				<div class="intro">소개</div>
+				<div
+					id="u-intro"
+					style="white-space: pre-line; text-align: left"
+				>
+					반녕
+				</div>
 			</div>
 			<!-- 수정 버튼 -->
 			<button
@@ -520,6 +590,7 @@
 
 		<!-- 수정 카드 -->
 		<div class="modify-card">
+			<p class="card-text">이미지 주소</p>
 			<div class="form-floating mb-3">
 				<input
 					type="email"
@@ -527,7 +598,7 @@
 					id="mod-userImageUrl"
 					placeholder="이미지 주소"
 				/>
-				<label for="floatingInput">이미지 주소</label>
+				<label for="floatingInput"></label>
 			</div>
 			<p class="card-text">팀원 이름</p>
 			<div class="form-floating mb-3">
@@ -552,12 +623,13 @@
 			</div>
 			<p class="card-title">팀원 소개</p>
 			<div class="form-floating mb-3">
-				<input
-					type="email"
+				<textarea
+					cols="30"
+					rows="5"
 					class="form-control"
 					id="mod-userIntroduce"
 					placeholder="팀원 소개"
-				/>
+				></textarea>
 				<label for="floatingInput"></label>
 			</div>
 
@@ -572,7 +644,7 @@
 		</div>
 
 		<div class="join">
-			<button onclick="openclose()">Join Our Team</button>
+			<button id="joinbtn">Join Our Team</button>
 		</div>
 	</body>
 </html>
