@@ -67,28 +67,26 @@
                 $('#card2').show();
             });
         });
+        
         $(function () {
             $('#finishbtn').click(function () {
                 let userImageUrl = $('#userImageUrl').val();
                 let userName = $('#userName').val();
                 let userMbti = $('#userMbti').val();
                 let userIntroduce = $('#userIntroduce').val();
-                console.log(userImageUrl)
-                console.log(userName)
-                console.log(userMbti)
-                console.log(userIntroduce)
-            //     fetch("http:localhost:8080/api/user", {
-            //     method: "PATCH",
-            //     headers: {
-            //         "Content-Type": "application/json",
-            //     },
-            //     body: JSON.stringify({
-            //         userImageUrl: "http://wolkeollkwd.com(예시)",
-            //         userName: "Test",
-            //         userMbti: "Test",
-            //         userIntroduce: "I am testing!",
-            //     }),
-            // }).then((response) => console.log(response));
+                const user_url = `http://localhost:8080/api/user/${userName}`;
+                fetch(user_url, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    userImageUrl: "userImageUrl",
+                    userName: "userName",
+                    userMbti: "userMbti",
+                    userIntroduce: "userIntroduce",
+                }),
+            }).then((response) => console.log(response));
             });
         });
 
